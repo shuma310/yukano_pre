@@ -1,0 +1,31 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Editors & IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Node modules (just in case)
+node_modules/
+npm-debug.log
+
+# Project specific (drafts and private notes)
+docs/
+text.txt
+*.log
+
+# Environment variables (just in case)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
