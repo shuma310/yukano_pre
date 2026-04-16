@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.text();
             })
             .then(html => {
+                // テンプレート変数の置換
+                html = html.replace(/\{\{basePath\}\}/g, basePath);
                 element.innerHTML = html;
             })
             .catch(error => {
@@ -31,11 +33,63 @@ document.addEventListener("DOMContentLoaded", () => {
         <p class="site-footer__copy">&copy; 2026 金魚大明神. All rights reserved.</p>
     </div>
 </footer>`;
+                } else if (elementId === 'common-header') {
+                    element.innerHTML = `
+<header class="global-header">
+    <div class="global-header__inner">
+        <a href="${basePath}index.html" class="global-header__logo">
+            ゆかの高校◎◎部！！
+        </a>
+
+        <nav class="global-nav-pc">
+            <ul class="global-nav-pc__list">
+                <li><a href="${basePath}index.html">Top</a></li>
+                <li><a href="${basePath}world/index.html">World</a></li>
+                <li><a href="${basePath}chara/index.html">Character</a></li>
+                <li><a href="${basePath}novel/index.html">Story</a></li>
+            </ul>
+        </nav>
+
+        <button id="js-hamburger" class="hamburger-btn" aria-label="メニューを開閉">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+        </button>
+    </div>
+</header>
+
+<nav id="js-nav-sp" class="global-nav-sp">
+    <ul class="global-nav-sp__list">
+        <li>
+            <a href="${basePath}index.html" class="nav-sp-link nav-top">Top</a>
+        </li>
+        <li>
+            <a href="${basePath}world/index.html" class="nav-sp-link nav-world">World</a>
+        </li>
+        <li>
+            <a href="${basePath}chara/index.html" class="nav-sp-link nav-chara">Character</a>
+        </li>
+        <li>
+            <a href="${basePath}novel/index.html" class="nav-sp-link nav-story">Story</a>
+        </li>
+    </ul>
+</nav>`;
                 }
             });
     }
 
+    loadComponent('common-header', 'components/header.html');
     loadComponent('common-footer', 'components/footer.html');
+
+    // グローバルヘッダーのハンバーガーメニュー開閉（イベントデリゲーション）
+    document.addEventListener("click", e => {
+        const btn = e.target.closest("#js-hamburger");
+        if (btn) {
+            btn.classList.toggle("is-active");
+            const nav = document.getElementById("js-nav-sp");
+            if (nav) nav.classList.toggle("is-open");
+        }
+    });
 
     // Markdownの共通処理・カクヨム記法の拡張（傍点・ルビ）
     const mdSourceEl = document.getElementById("markdown-source");
@@ -57,12 +111,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 mdSource = mdSource.replace(/([一-龠々]+)《([^》\n]+)》/g, '<ruby>$1<rt>$2</rt></ruby>');
 
                 // TBC (To Be Continued) 置換
-                mdSource = mdSource.replace(/^\s*\[TBC\]\s*$/gm, '<p class="text-center mt-10 font-display text-yukano-pink" style="font-size:1.5rem;">To Be Continued...</p>');
-                mdSource = mdSource.replace(/^\s*\[TBC:(.+?)\]\s*$/gm, '<p class="text-center mt-10 font-display text-yukano-pink" style="font-size:1.5rem;">$1</p>');
+                mdSource = mdSource.replace(/^\s*\[TBC\]\s*$/gm, '<p class="text-center mt-20 font-display text-yukano-pink" style="font-size:1.5rem;">To Be Continued...</p>');
+                mdSource = mdSource.replace(/^\s*\[TBC:(.+?)\]\s*$/gm, '<p class="text-center mt-20 font-display text-yukano-pink" style="font-size:1.5rem;">$1</p>');
 
                 // Markdownの連続する空行をそのまま空白行として出力するための処理
                 // \n\n (1行空き) の場合は <br> が1つ、\n\n\n の場合は <br> が2つ出力されるようにする
-                mdSource = mdSource.replace(/\n(\n+)/g, function(match, p1) {
+                mdSource = mdSource.replace(/\n(\n+)/g, function (match, p1) {
                     return '\n\n' + '<br>'.repeat(p1.length) + '\n\n';
                 });
 
