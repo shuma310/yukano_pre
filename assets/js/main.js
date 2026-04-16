@@ -2,6 +2,75 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     const basePath = document.querySelector('meta[name="base-path"]')?.content || "./";
+    const worldMapSize = { width: 1400, height: 1000 };
+
+    function enhanceArticleLightboxes(container) {
+        if (!container || container.dataset.lightbox !== 'world-map' || container.dataset.pswpEnhanced === 'true') {
+            return;
+        }
+
+        const mapImages = Array.from(container.querySelectorAll('img')).filter(img => {
+            const src = img.getAttribute('src') || '';
+            return src.includes('yukano_map.jpg');
+        });
+
+        if (!mapImages.length) return;
+
+        mapImages.forEach(img => {
+            const src = img.currentSrc || img.getAttribute('src') || '';
+            const alt = img.getAttribute('alt') || '画像';
+            let link = img.closest('a.article-zoom-link');
+
+            if (!link) {
+                link = document.createElement('a');
+                link.className = 'article-zoom-link js-pswp-link';
+
+                const parent = img.parentElement;
+                const isStandaloneParagraph = parent
+                    && parent.tagName === 'P'
+                    && parent.childElementCount === 1
+                    && parent.textContent.trim() === '';
+
+                if (isStandaloneParagraph) {
+                    const figure = document.createElement('figure');
+                    figure.className = 'article-zoom-figure';
+                    parent.replaceWith(figure);
+                    figure.appendChild(link);
+                    link.appendChild(img);
+
+                    const caption = document.createElement('figcaption');
+                    caption.className = 'article-zoom-caption';
+                    caption.textContent = '画像をタップして拡大';
+                    figure.appendChild(caption);
+                } else {
+                    img.replaceWith(link);
+                    link.appendChild(img);
+                }
+            }
+
+            link.href = src;
+            link.setAttribute('data-pswp-width', String(worldMapSize.width));
+            link.setAttribute('data-pswp-height', String(worldMapSize.height));
+            link.setAttribute('aria-label', `${alt}を拡大表示`);
+
+            img.setAttribute('loading', 'lazy');
+        });
+
+        if (!window.PhotoSwipeLightbox || !window.PhotoSwipe) {
+            throw new Error('PhotoSwipe UMD bundle is not available.');
+        }
+
+        const lightbox = new window.PhotoSwipeLightbox({
+            gallery: '#' + container.id,
+            children: '.js-pswp-link',
+            pswpModule: window.PhotoSwipe,
+            bgOpacity: 0.92
+        });
+
+        lightbox.init();
+        container.dataset.pswpEnhanced = 'true';
+        container._pswpLightbox = lightbox;
+    }
 
     function normalizePath(pathname) {
         const normalized = pathname
@@ -193,6 +262,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
                 marked.setOptions({ renderer: renderer, breaks: true, gfm: true });
                 mdTargetEl.innerHTML = marked.parse(mdSource);
+                Promise.resolve().then(() => enhanceArticleLightboxes(mdTargetEl)).catch(error => {
+                    console.warn('[Vanilla JS] PhotoSwipe の初期化に失敗しました。:', error);
+                });
             };
             document.head.appendChild(script);
         }
