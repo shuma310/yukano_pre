@@ -150,6 +150,25 @@ img {
     border: 0;
 }
 
+.skip-link {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 200;
+    padding: 0.75rem 1rem;
+    background: var(--color-yellow);
+    color: var(--color-dark);
+    border: 3px solid var(--color-dark);
+    box-shadow: var(--shadow-brutal-black);
+    font-family: var(--font-display);
+    transform: translateY(-200%);
+    transition: transform 0.15s ease;
+}
+
+.skip-link:focus-visible {
+    transform: translateY(0);
+}
+
 /* --- テキストカラー --- */
 .text-yukano-pink {
     color: var(--color-pink);

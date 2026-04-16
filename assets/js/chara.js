@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.setAttribute('aria-pressed', String(isActive));
 
             btn.innerHTML = `
-                <img src="${char.thumb}" alt="${char.name}">
+                <img src="${char.thumb}" alt="">
                 ${isActive ? '<div class="chara-thumb-active-icon">★</div>' : ''}
             `;
 
@@ -121,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (mainLinkEl) {
             mainLinkEl.href = `contents/char_${currentChar.id}.html`;
+            mainLinkEl.setAttribute('aria-label', `${currentChar.name}の詳細を見る`);
         }
 
         // バッジ更新

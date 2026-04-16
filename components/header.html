@@ -1,10 +1,11 @@
+<a href="#main-content" class="skip-link">本文へスキップ</a>
 <header class="global-header">
     <div class="global-header__inner">
         <a href="{{basePath}}index.html" class="global-header__logo">
             ゆかの高校◎◎部！！
         </a>
 
-        <nav class="global-nav-pc">
+        <nav class="global-nav-pc" aria-label="グローバルナビゲーション">
             <ul class="global-nav-pc__list">
                 <li><a href="{{basePath}}index.html">Top</a></li>
                 <li><a href="{{basePath}}world/index.html">World</a></li>
@@ -13,7 +14,8 @@
             </ul>
         </nav>
 
-        <button id="js-hamburger" class="hamburger-btn" aria-label="メニューを開閉">
+        <button id="js-hamburger" class="hamburger-btn" aria-label="メニューを開く" aria-controls="js-nav-sp"
+            aria-expanded="false" type="button">
             <span class="line-1"></span>
             <span class="line-2"></span>
             <span class="line-3"></span>
@@ -21,7 +23,7 @@
     </div>
 </header>
 
-<nav id="js-nav-sp" class="global-nav-sp">
+<nav id="js-nav-sp" class="global-nav-sp" aria-label="モバイルナビゲーション" aria-hidden="true">
     <ul class="global-nav-sp__list">
         <li>
             <a href="{{basePath}}index.html" class="nav-sp-link nav-top">Top</a>

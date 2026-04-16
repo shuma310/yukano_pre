@@ -6,7 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>極彩色に染まる月 | ショートノベル | ゆかの高校◎◎部！！</title>
     <meta name="description" content="ゆかの高校◎◎部！！ ショートノベル #01「極彩色に染まる月」">
+    <meta property="og:site_name" content="ゆかの高校◎◎部！！">
+    <meta property="og:locale" content="ja_JP">
     <meta property="og:title" content="極彩色に染まる月 | ゆかの高校◎◎部！！">
+    <meta property="og:description" content="201X年9月29日、新月の夜。由嘉野市の空に現れた極彩色のオーロラと『あれ』を描くショートノベル第1話。">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="../../assets/images/characters/char_kogarashi.png">
+    <meta property="og:image:alt" content="木枯アユムの立ち絵">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@yukano_p">
+    <meta name="twitter:title" content="極彩色に染まる月 | ゆかの高校◎◎部！！">
+    <meta name="twitter:description" content="201X年9月29日、新月の夜。由嘉野市の空に現れた極彩色のオーロラと『あれ』を描くショートノベル第1話。">
+    <meta name="twitter:image" content="../../assets/images/characters/char_kogarashi.png">
+    <meta name="twitter:image:alt" content="木枯アユムの立ち絵">
     <meta name="base-path" content="../../">
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
@@ -19,9 +31,9 @@
     <!-- ===== ヘッダー ===== -->
     <header class="site-header site-header--yellow">
         <div class="container">
-            <h1 class="page-header-title page-header-title--novel">
+            <p class="page-header-title page-header-title--novel" aria-hidden="true">
                 NOVEL
-            </h1>
+            </p>
         </div>
     </header>
 
@@ -32,22 +44,23 @@
             <span class="breadcrumb-sep" aria-hidden="true">&gt;</span>
             <a href="../index.html" class="breadcrumb-item">ショートノベル</a>
             <span class="breadcrumb-sep" aria-hidden="true">&gt;</span>
-            <span class="breadcrumb-item breadcrumb-item--active" aria-current="page">#01</span>
+            <span class="breadcrumb-item breadcrumb-item--active" aria-current="page">極彩色に染まる月</span>
         </nav>
     </div>
 
     <!-- ===== メインコンテンツ ===== -->
-    <main class="container container--narrow mt-8 mb-20">
+    <main id="main-content" tabindex="-1" class="container container--narrow mt-8 mb-20">
 
         <!-- エピソードヘッダー -->
         <div class="episode-header text-center mb-8">
             <span class="episode-header__num font-display">Episode #01</span>
-            <h2 class="episode-header__title font-display">極彩色に染まる月</h2>
+            <h1 id="episode-title" class="episode-header__title font-display">極彩色に染まる月</h1>
             <p class="episode-header__date font-bold">2026.04.16 公開</p>
         </div>
 
         <!-- 本文 -->
-        <div id="content-target" class="brutal-card brutal-card--article brutal-prose novel-prose"></div>
+        <article id="content-target" class="brutal-card brutal-card--article brutal-prose novel-prose"
+            aria-labelledby="episode-title"></article>
 
         <!-- ページネーション -->
         <nav class="pagination-nav mt-10" aria-label="エピソードナビゲーション">

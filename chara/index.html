@@ -6,7 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>キャラクター紹介 | ゆかの高校◎◎部！！</title>
     <meta name="description" content="ゆかの高校◎◎部！！の登場人物の一覧と詳細設定です。">
+    <meta property="og:site_name" content="ゆかの高校◎◎部！！">
+    <meta property="og:locale" content="ja_JP">
     <meta property="og:title" content="キャラクター紹介 | ゆかの高校◎◎部！！">
+    <meta property="og:description" content="由嘉野高校や由嘉野市で日常と非日常を生きる登場人物たちの一覧と詳細設定です。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="../assets/images/characters/char_kogarashi.png">
+    <meta property="og:image:alt" content="木枯アユムの立ち絵">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@yukano_p">
+    <meta name="twitter:title" content="キャラクター紹介 | ゆかの高校◎◎部！！">
+    <meta name="twitter:description" content="由嘉野高校や由嘉野市で日常と非日常を生きる登場人物たちの一覧と詳細設定です。">
+    <meta name="twitter:image" content="../assets/images/characters/char_kogarashi.png">
+    <meta name="twitter:image:alt" content="木枯アユムの立ち絵">
     <meta name="base-path" content="../">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
@@ -36,7 +48,7 @@
     </div>
 
     <!-- ===== メインコンテンツ ===== -->
-    <main class="container mt-8 mb-20">
+    <main id="main-content" tabindex="-1" class="container mt-8 mb-20">
 
         <!-- キャラクタービューア -->
         <div id="chara-viewer" class="chara-viewer is-faction-yuka-high">
@@ -56,7 +68,7 @@
             </div>
             <div class="chara-display">
                 <!-- キャラクターのセリフや情報 -->
-                <div id="chara-info-layer" class="chara-display__info">
+                <div id="chara-info-layer" class="chara-display__info" aria-live="polite" aria-atomic="true">
                     <div class="chara-line-box">
                         <p id="chara-main-line" class="chara-line-text"></p>
                     </div>

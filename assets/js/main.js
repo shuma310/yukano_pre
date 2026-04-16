@@ -1,14 +1,61 @@
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    const basePath = document.querySelector('meta[name="base-path"]')?.content || "./";
 
+    function normalizePath(pathname) {
+        const normalized = pathname
+            .replace(/\\/g, '/')
+            .replace(/index\.html$/i, '')
+            .replace(/\/+$/g, '');
+
+        return normalized || '/';
+    }
+
+    function updateActiveNav() {
+        const currentPath = normalizePath(window.location.pathname);
+        const links = document.querySelectorAll('.global-nav-pc__list a, .global-nav-sp__list a');
+
+        links.forEach(link => {
+            const linkPath = normalizePath(new URL(link.getAttribute('href'), window.location.href).pathname);
+            const isActive = linkPath === currentPath;
+
+            link.classList.toggle('is-active', isActive);
+
+            if (isActive) {
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.removeAttribute('aria-current');
+            }
+        });
+    }
+
+    function setMobileNavState(isOpen) {
+        const btn = document.getElementById("js-hamburger");
+        const nav = document.getElementById("js-nav-sp");
+
+        if (btn) {
+            btn.classList.toggle("is-active", isOpen);
+            btn.setAttribute("aria-expanded", String(isOpen));
+            btn.setAttribute("aria-label", isOpen ? "メニューを閉じる" : "メニューを開く");
+        }
+
+        if (nav) {
+            nav.classList.toggle("is-open", isOpen);
+            nav.setAttribute("aria-hidden", String(!isOpen));
+        }
+    }
+
+    function enhanceHeader() {
+        updateActiveNav();
+        setMobileNavState(false);
+    }
 
     function loadComponent(elementId, componentPath) {
         const element = document.getElementById(elementId);
         if (!element) return;
 
         // 現在のパスからの相対パス解決を補助
-        const basePath = document.querySelector('meta[name="base-path"]')?.content || "./";
         const url = basePath + componentPath;
 
         fetch(url)
@@ -20,6 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 // テンプレート変数の置換
                 html = html.replace(/\{\{basePath\}\}/g, basePath);
                 element.innerHTML = html;
+
+                if (elementId === 'common-header') {
+                    enhanceHeader();
+                }
             })
             .catch(error => {
                 console.warn(`[Vanilla JS] コンポーネント(${componentPath})の読み込みに失敗しました。ローカルプレビュー時などプロトコルエラーの可能性があります。:`, error);
@@ -35,13 +86,14 @@ document.addEventListener("DOMContentLoaded", () => {
 </footer>`;
                 } else if (elementId === 'common-header') {
                     element.innerHTML = `
+<a href="#main-content" class="skip-link">本文へスキップ</a>
 <header class="global-header">
     <div class="global-header__inner">
         <a href="${basePath}index.html" class="global-header__logo">
             ゆかの高校◎◎部！！
         </a>
 
-        <nav class="global-nav-pc">
+        <nav class="global-nav-pc" aria-label="グローバルナビゲーション">
             <ul class="global-nav-pc__list">
                 <li><a href="${basePath}index.html">Top</a></li>
                 <li><a href="${basePath}world/index.html">World</a></li>
@@ -50,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </ul>
         </nav>
 
-        <button id="js-hamburger" class="hamburger-btn" aria-label="メニューを開閉">
+        <button id="js-hamburger" class="hamburger-btn" aria-label="メニューを開く" aria-controls="js-nav-sp" aria-expanded="false" type="button">
             <span class="line-1"></span>
             <span class="line-2"></span>
             <span class="line-3"></span>
@@ -58,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
 </header>
 
-<nav id="js-nav-sp" class="global-nav-sp">
+<nav id="js-nav-sp" class="global-nav-sp" aria-label="モバイルナビゲーション" aria-hidden="true">
     <ul class="global-nav-sp__list">
         <li>
             <a href="${basePath}index.html" class="nav-sp-link nav-top">Top</a>
@@ -74,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </li>
     </ul>
 </nav>`;
+                    enhanceHeader();
                 }
             });
     }
@@ -85,9 +138,19 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", e => {
         const btn = e.target.closest("#js-hamburger");
         if (btn) {
-            btn.classList.toggle("is-active");
-            const nav = document.getElementById("js-nav-sp");
-            if (nav) nav.classList.toggle("is-open");
+            setMobileNavState(btn.getAttribute("aria-expanded") !== "true");
+            return;
+        }
+
+        const mobileLink = e.target.closest("#js-nav-sp a");
+        if (mobileLink) {
+            setMobileNavState(false);
+        }
+    });
+
+    document.addEventListener("keydown", e => {
+        if (e.key === "Escape") {
+            setMobileNavState(false);
         }
     });
 

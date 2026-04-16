@@ -20,18 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .join('<br>');
     }
 
-    document.title = `${character.name} | キャラクター紹介 | ゆかの高校◎◎部！！`;
-
-    const descriptionMeta = document.querySelector('meta[name="description"]');
-    if (descriptionMeta) {
-        descriptionMeta.setAttribute('content', `${character.name}のキャラクター紹介。ゆかの高校◎◎部！！`);
-    }
-
-    const ogTitleMeta = document.querySelector('meta[property="og:title"]');
-    if (ogTitleMeta) {
-        ogTitleMeta.setAttribute('content', `${character.name} | ゆかの高校◎◎部！！`);
-    }
-
     const breadcrumbNameEl = document.getElementById('character-breadcrumb-name');
     if (breadcrumbNameEl) {
         breadcrumbNameEl.textContent = character.name;
