@@ -3,6 +3,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // 要素の取得
     const viewerEl = document.getElementById('chara-viewer');
     if (!viewerEl) return; // ビューアが存在しないページでは実行しない
+    if (!Array.isArray(window.YUKANO_CHARACTERS)) return;
+
+    function escapeHtml(text) {
+        return text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
 
     const factionMenuEl = document.getElementById('chara-faction-menu');
     const charListEl = document.getElementById('chara-list');
@@ -23,59 +31,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // キャラクターデータ
     const basePath = document.querySelector('meta[name="base-path"]')?.content || '../';
-
-    const characters = [
-        {
-            id: 'kogarashi',
-            faction: 'yuka-high',
-            name: '木枯アユム',
-            nameKana: 'Kogarashi Ayumu',
-            line: '「…………（無口）」',
-            bio: '普通の高校生で、特筆すべきことはない。が、201X年9月29日の午前4時44分に「あれ」を目撃してしまい、いくつかの家族に関する記憶を失い、狂人を自称するようになってしまった。',
-            image: basePath + 'assets/images/characters/char_kogarashi.png',
-            thumb: basePath + 'assets/images/characters/char_kogarashi.png'
-        },
-        {
-            id: 'nekobo',
-            faction: 'yuka-high',
-            name: '猫々目ぐみ',
-            nameKana: 'Meumeume Gumi',
-            line: '「大丈夫、猫飼ってるからね」',
-            bio: 'ねこみみキャスケットがトレードマークの女の子。「南向きの窓」が開いていて、それ以外の全てが封鎖されて通過できない部屋の中でしか喋れない。',
-            image: basePath + 'assets/images/characters/char_nekobo.png',
-            thumb: basePath + 'assets/images/characters/char_nekobo.png'
-        },
-        {
-            id: 'marusaka',
-            faction: 'yuka-high',
-            name: '◎坂万事',
-            nameKana: 'Marusaki Banji',
-            line: '「これは運命なんだ。君は今すぐ職員室へ行って、白紙の入部届のど真ん中に『◎◎部』と書くことになる。そうだろ？」',
-            bio: '逆世界を探索する『◎◎部』の部長。性別不詳で、一人称は「吾輩」。「坂」について研究し、逆世界へ行く方法を確立しようとしている。',
-            image: basePath + 'assets/images/characters/noimage.png',
-            thumb: basePath + 'assets/images/characters/noimage.png'
-        },
-        {
-            id: 'tadano',
-            faction: 'yuka-high',
-            name: '只野 正義',
-            nameKana: 'Tadano Masayoshi',
-            line: '「ホームルームをはじめまァ～～～す！！！（クソデカ大声）」',
-            bio: '爽やかで熱血な体育教諭・生活指導。よく走り、よく笑い、よく食べる。\nが、過去になにかあったらしく、『修学旅行』という行事に特別思うところがあるらしい。',
-            image: basePath + 'assets/images/characters/noimage.png',
-            thumb: basePath + 'assets/images/characters/noimage.png'
-        },
-        {
-            id: 'tsurimura',
-            faction: 'yuka-high',
-            name: '吊村 炉辺',
-            nameKana: 'Tsurimura Rohen',
-            line: '「好きなもの……海かな」',
-            bio: '由嘉野高校の生物教諭。穏やかで理知的、知的好奇心に富む。\nなぜか毎晩、西由嘉野の海に毎夜通いつめている。',
-            image: basePath + 'assets/images/characters/noimage.png',
-            thumb: basePath + 'assets/images/characters/noimage.png'
-        }
-    ];
+    const characters = window.YUKANO_CHARACTERS.map(character => ({
+        id: character.id,
+        faction: character.faction,
+        name: character.name,
+        nameKana: character.nameKana,
+        line: character.line,
+        bio: character.viewerBio,
+        image: basePath + character.viewerImage,
+        thumb: basePath + character.viewerImage
+    }));
 
     let currentFaction = factions[0].id;
     let currentChar = characters.find(c => c.faction === currentFaction);
@@ -111,6 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const btn = document.createElement('button');
 
             btn.className = 'chara-thumb-btn' + (isActive ? ' is-active' : '');
+            btn.type = 'button';
+            btn.setAttribute('aria-label', `${char.name}を表示`);
+            btn.setAttribute('aria-pressed', String(isActive));
 
             btn.innerHTML = `
                 <img src="${char.thumb}" alt="${char.name}">
@@ -145,10 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // データ反映
         mainImageEl.src = currentChar.image;
+        mainImageEl.alt = currentChar.name;
         mainLineEl.innerText = currentChar.line;
         mainNameEl.innerText = currentChar.name;
         mainNameKanaEl.innerText = currentChar.nameKana;
-        mainBioEl.innerText = currentChar.bio;
+        mainBioEl.innerHTML = escapeHtml(currentChar.bio).replace(/\n/g, '<br>');
 
         if (mainLinkEl) {
             mainLinkEl.href = `contents/char_${currentChar.id}.html`;

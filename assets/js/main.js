@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const mdTargetEl = document.getElementById("content-target");
         if (mdTargetEl) {
             const script = document.createElement('script');
-            script.src = "https://cdn.jsdelivr.net/npm/marked/marked.min.js";
+            script.src = basePath + "assets/vendor/marked.umd.js";
             script.onload = () => {
                 let mdSource = mdSourceEl.textContent.replace(/^\n+|\n+$/g, '');
 

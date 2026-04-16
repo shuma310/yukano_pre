@@ -4,96 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marusaki | 世界観設定 | ゆかの高校◎◎部！！</title>
-    <meta name="description" content="◎坂万事のキャラクター紹介。ゆかの高校◎◎部！！">
-    <meta property="og:title" content="◎坂万事 | ゆかの高校◎◎部！！">
+    <title>キャラクター紹介 | ゆかの高校◎◎部！！</title>
+    <meta name="description" content="ゆかの高校◎◎部！！のキャラクター紹介。">
+    <meta property="og:title" content="キャラクター紹介 | ゆかの高校◎◎部！！">
     <meta name="base-path" content="../../">
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 
-<body>
+<body data-character-id="marusaka">
 
-    <!-- 共通ヘッダー読み込み用要素 -->
     <div id="common-header"></div>
 
-    <!-- ===== ヘッダー ===== -->
     <header class="site-header site-header--blue">
         <div class="container">
             <h1 class="page-header-title page-header-title--world">CHARACTER</h1>
         </div>
     </header>
 
-    <!-- ===== パンくず ===== -->
     <div class="container container--wide">
         <nav class="breadcrumb-nav" aria-label="パンくずナビゲーション">
             <a href="../../index.html" class="breadcrumb-item">HOME</a>
             <span class="breadcrumb-sep" aria-hidden="true">&gt;</span>
-            <a href="../index.html" class="breadcrumb-item">世界観設定</a>
+            <a href="../index.html" class="breadcrumb-item">キャラクター紹介</a>
             <span class="breadcrumb-sep" aria-hidden="true">&gt;</span>
-            <span class="breadcrumb-item breadcrumb-item--active" aria-current="page">◎崎万事</span>
+            <span id="character-breadcrumb-name" class="breadcrumb-item breadcrumb-item--active"
+                aria-current="page"></span>
         </nav>
     </div>
 
-    <!-- ===== メインコンテンツ ===== -->
     <main class="container container--wide mt-8 mb-20">
-
         <div class="char-layout">
-
-            <!-- 画像カラム -->
             <div class="char-image-col">
-                <div class="char-image-wrap">
-                    <!-- キャラクター画像を設定する場合は以下のコメントアウトを外してください -->
-                    <!-- <img src="../../assets/images/characters/marusaki_banji.png" alt="◎崎万事"> -->
-                    <span class="char-no-image" aria-hidden="true">NO<br>IMAGE</span>
-                    <div class="char-type-badge" aria-label="キャラクタータイプ：侵食者">侵食者</div>
+                <div id="character-image-wrap" class="char-image-wrap">
+                    <div id="character-type-badge" class="char-type-badge" aria-label="キャラクタータイプ"></div>
                 </div>
             </div>
 
-            <!-- 情報カラム -->
             <div class="char-info-col">
-
                 <div>
-                    <h2 class="char-name-title">◎坂万事</h2>
-                    <p class="char-name-ruby">Marusaki Banji</p>
-                    <div class="tag-list">
-                        <span class="brutal-tag">18歳</span>
-                        <span class="brutal-tag">両性</span>
-                        <span class="brutal-tag">180cm</span>
-                        <span class="brutal-tag">由嘉野高校</span>
-                        <span class="brutal-tag">3年D組</span>
-                        <span class="brutal-tag">◎◎部所属・部長</span>
-                    </div>
+                    <h2 id="character-name" class="char-name-title"></h2>
+                    <p id="character-name-kana" class="char-name-ruby"></p>
+                    <div id="character-tags" class="tag-list"></div>
                 </div>
 
                 <div class="char-info-box">
-                    <h3 class="char-info-box__title">侵食状況・能力</h3>
-                    <div class="char-info-box__body">
-                        異邦人と普通の人間のハーフ。<br>
-                        だが、なんの能力もない……と本人は思っているが、実は侵食に対する完全な免疫があり、その血はあらゆる侵食焼けを退けることができる。<br>
-                        代わりに「逆世界」には一切入ることができない。
-                    </div>
+                    <h3 id="character-info-title" class="char-info-box__title"></h3>
+                    <div id="character-info-body" class="char-info-box__body"></div>
                 </div>
-
             </div>
         </div>
 
-        <!-- プロフィール -->
         <div class="brutal-card brutal-card--article mt-8">
-            <p class="font-bold" style="font-size: 1.0625rem; line-height: 2;">
-                ◎◎部の部長。<br>
-                見た目は完全に普通の人間と変わらないが、動きがうるさいので遠くからでも見分けやすい。眼鏡をかけている。視力は両目とも0.01。<br>
-                基本的に口からでまかせしか言わない。受験勉強をぜんぜんしていない。<br>
-                「坂」について研究し、「逆世界」との交信を確立しようとしている。<br>
-                そのために手段は選ばず、逆世界に触れたことのある人間をかたっぱしから入部させようと画策している。<br>
-                オカ研の部長とは3回付き合って3回別れ、今はメッセージアプリとSNSを全部ブロックされている。<br><br>
-                <span style="color:var(--color-gray-500);">台詞：</span><br>
-                <em style="color:var(--color-blue); font-style:normal;">
-                    「これは運命なんだ。君は今すぐ職員室へ行って、白紙の入部届のど真ん中に『◎◎部』と書くことになる。そうだろ？」<br>
-                    「大丈夫さ。うまくいってそうに見える物事ほど、うまくいっていた試しってもんがないんだ」<br>
-                    「勉強なんかいらない！　吾輩には確信がある、受験勉強なんかする必要ないってね。いずれ君たちにもわかるさ」<br>
-                    「メンヘラだッァァァーーー！！！！　追い返せッェーーー！！！！」
-                </em>
-            </p>
+            <p id="character-profile-body" class="font-bold" style="font-size: 1.0625rem; line-height: 2;"></p>
         </div>
 
         <div class="text-center mt-10">
@@ -101,12 +63,12 @@
                 &larr; 一覧に戻る
             </a>
         </div>
-
     </main>
 
-    <!-- 共通フッター読み込み用要素 -->
     <div id="common-footer"></div>
     <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/character-data.js"></script>
+    <script src="../../assets/js/character-detail.js"></script>
 
 </body>
 
